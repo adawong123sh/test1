@@ -1,13 +1,130 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Plot</title>
+    <style>
+      /* Общие стили */
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        background-color: #fff;
+        padding: 20px 40px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        max-width: 800px;
+        width: 100%;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      .error {
+        background-color: #ffe6e6;
+        color: #cc0000;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .plot-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .links a {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      .links a:hover {
+        background-color: #0056b3;
+      }
+
+      .home-link {
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+        color: #007BFF;
+        text-decoration: none;
+      }
+
+      .home-link:hover {
+        text-decoration: underline;
+      }
+
+      .message {
+        text-align: center;
+        color: #555;
+      }
+
+      /* Адаптивность */
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+
+        .links a {
+          flex: 1 1 100%;
+          text-align: center;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>CSV Data Plot</h1>
-    <img src="{{ url_for('static', filename='plot.png') }}" alt="Plot">
-    <a href="/">Go to Home</a>
+    <div class="container">
+      <h1>CSV Data Plot</h1>
+      
+      {% if context.error %}
+        <div class="error">{{ context.error }}</div>
+      {% endif %}
+      
+      <div class="plot-container">
+        <img src="{{ url_for('static', filename='plot.png') }}" alt="Plot">
+      </div>
+      
+      <div class="links">
+        <a href="/">Go to Home</a>
+        {% for col in context.columns %}
+          <a href="/plot/{{context.filename}}/?col={{ col }}">{{ col }}</a>
+        {% endfor %}
+      </div>
+      
+      <div class="message">{{ message }}</div>
+    </div>
   </body>
 </html>

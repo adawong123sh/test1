@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DataFrame Statistics for {{ filename }}</title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f9f9f9;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>DataFrame Statistics for {{ filename }}</h1>
+
+    <h2>General Information</h2>
+    <p><strong>Shape:</strong> {{ stats.shape[0] }} rows, {{ stats.shape[1] }} columns</p>
+
+    <h2>Column Names</h2>
+    <ul>
+      {% for col in stats.columns %}
+        <li>{{ col }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Missing Values</h2>
+    <ul>
+      {% for col, missing in stats.null_values.items() %}
+        <li>{{ col }}: {{ missing }} missing values</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Descriptive Statistics</h2>
+    <div>
+      {{ stats.description | safe }}
+    </div>
+
+    <a href="/">Go to Home</a>
+    <h2>Visualize Data</h2>
+    <p>
+      <a href="/plot/{{ filename }}">View Plot</a>
+    </p>
+  </body>
+</html>

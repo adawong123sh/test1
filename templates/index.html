@@ -4,9 +4,118 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CSV Plotter</title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        background-color: #fff;
+        padding: 40px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: center;
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 30px;
+      }
+
+      a {
+        background-color: #28a745;
+        color: #fff;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease;
+      }
+
+      a:hover {
+        background-color: #218838;
+      }
+
+      /* Адаптивность для мобильных устройств */
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        a {
+          font-size: 1rem;
+          padding: 10px 20px;
+        }
+      }
+
+      /* Стили для списка файлов */
+      .file-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .file-list li {
+        margin-bottom: 10px;
+      }
+
+      .file-link {
+        display: block;
+        padding: 10px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 18px;
+      }
+
+      .file-link:hover {
+        background-color: #0056b3;
+      }
+    </style>
   </head>
   <body>
-    <h1>Welcome to CSV Plotter</h1>
-    <a href="/upload">Upload a CSV file</a>
+    <div class="container">
+      <h1>Welcome to CSV Plotter</h1>
+      <p>Upload your CSV file to visualize data plots.</p>
+      <a href="/upload">Upload a CSV file</a>
+
+      <main>
+        <h1>Uploaded CSV Files</h1>
+
+        <!-- Проверяем, есть ли загруженные файлы -->
+        {% if csv_files %}
+          <ul class="file-list">
+            <!-- Для каждого файла создаем ссылку -->
+            {% for file in csv_files %}
+              <li><a href="/statistic/{{ file }}" class="file-link">{{ file }}</a></li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No CSV files uploaded yet.</p>
+        {% endif %}
+      </main>
+
+    </div>
   </body>
 </html>
